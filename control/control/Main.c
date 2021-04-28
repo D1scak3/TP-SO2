@@ -6,7 +6,8 @@
 #include <stdlib.h>
 #include <math.h>
 
-
+#define MAX_AEROPORTOS 20
+#define MAX_AVIOES 5
 #define TAM 200
 #define ALREADY_CREATED_FLAG TEXT("este_valor_e_usado_para_garantir_que_so_existe_uma_instancia_a_correr_de_cada_vez")
 
@@ -22,15 +23,12 @@ int obtemIntDoregistry(HKEY chaveRegistry, TCHAR par_nome[]);
 void criarAeroporto();
 
 
-
-
-
 HKEY chaveRegistry = NULL;
 
 
 
-int max_aeroportos = 5;		//define número máximo de aeroportos
-int max_avioes = 20;		//define número máximo de aviões
+int max_aeroportos;		//define número máximo de aeroportos
+int max_avioes;		//define número máximo de aviões
 
 int mapa[1000][1000];		//mapa com cordenadas
 pAeroporto listaAeroportos;	//lista que guarda os aeroportos
@@ -71,44 +69,44 @@ int _tmain(int argc, TCHAR* argv[]) {
 
 	TCHAR chave_avioes[] = TEXT("Software\\SO2\\TPMDMF\\AVIOES\\");		
 	TCHAR chave_aeroportos[] = TEXT("Software\\SO2\\TPMDMF\\AEROPORTOS\\");
-	DWORD openChecker;
 
 
 	//Obtem valores para aviões
-	if (RegCreateKeyEx(HKEY_CURRENT_USER, chave_avioes, 0, NULL, REG_OPTION_VOLATILE, KEY_SET_VALUE | KEY_QUERY_VALUE, NULL, &chaveRegistry, &openChecker) != ERROR_SUCCESS)
+	if (RegCreateKeyEx(HKEY_CURRENT_USER, chave_avioes, 0, NULL, REG_OPTION_VOLATILE, KEY_SET_VALUE | KEY_QUERY_VALUE, NULL, &chaveRegistry, NULL) != ERROR_SUCCESS)
 	{
 		_tprintf(TEXT("\nErro critico a ler chave de aviões!\nA desligar programa"));
 		exit(-1);
 	}
-	if (openChecker == REG_CREATED_NEW_KEY) {		//a chave foi criada
-		//define max aviões no registry
-		wcscpy_s(par_nome, TAM, TEXT("MAXAVIOES"));
-		_stprintf_s(par_valor, TAM, TEXT("%d"), max_avioes);
-		escreveNoRegistry(chaveRegistry, par_nome, par_valor);
-	}
-	else{
+	//tenta obter
 		wcscpy_s(par_nome, TAM, TEXT("MAXAVIOES"));
 		max_avioes = obtemIntDoregistry(chaveRegistry, par_nome);
-	}
+		if (max_avioes == -1)	//caso não exista para obter, escreve
+		{
+			wcscpy_s(par_nome, TAM, TEXT("MAXAVIOES"));
+			_stprintf_s(par_valor, TAM, TEXT("%d"), MAX_AVIOES);
+			escreveNoRegistry(chaveRegistry, par_nome, par_valor);
+			max_avioes = MAX_AVIOES;
+		}
+	
 
 	//fecha a handle de aviões
 	CloseHandle(chaveRegistry);
-	openChecker = NULL;		//limpa openchecker
 
-if (RegCreateKeyEx(HKEY_CURRENT_USER, chave_aeroportos, 0, NULL, REG_OPTION_VOLATILE, KEY_SET_VALUE | KEY_QUERY_VALUE, NULL, &chaveRegistry, &openChecker) != ERROR_SUCCESS) {
+if (RegCreateKeyEx(HKEY_CURRENT_USER, chave_aeroportos, 0, NULL, REG_OPTION_VOLATILE, KEY_SET_VALUE | KEY_QUERY_VALUE, NULL, &chaveRegistry, NULL) != ERROR_SUCCESS) {
 	_tprintf(TEXT("\nErro critico a ler a chave do controlador2!\nA desligar o programa"));
 	exit(-1);
 }
-if (openChecker == REG_CREATED_NEW_KEY) {		//a chave foi criada
-	//define max aeroportos no registry
+	//tenta obter
 	wcscpy_s(par_nome, TAM, TEXT("MAXAEROPORTOS"));
-	_stprintf_s(par_valor, TAM, TEXT("%d"), max_aeroportos);
-	escreveNoRegistry(chaveRegistry, par_nome, par_valor);
-}
-else {
-	wcscpy_s(par_nome, TAM, TEXT("MAXAEROPORTOS"));
-	max_aeroportos = obtemIntDoregistry(chaveRegistry, par_nome);		//MAX AEROPORTOS FICA COM O VALOR DO REGISTRY
-}
+	max_aeroportos = obtemIntDoregistry(chaveRegistry, par_nome);
+	if (max_aeroportos == -1)//caso não exista para obter, escreve 
+	{	
+		wcscpy_s(par_nome, TAM, TEXT("MAXAEROPORTOS"));
+		_stprintf_s(par_valor, TAM, TEXT("%d"), MAX_AEROPORTOS);
+		escreveNoRegistry(chaveRegistry, par_nome, par_valor);
+		max_aeroportos = MAX_AEROPORTOS;
+	}
+
 //fecha a handle de aeroportos
 CloseHandle(chaveRegistry);
 
@@ -169,16 +167,9 @@ int obtemIntDoregistry(HKEY chaveRegistry, TCHAR par_nome[]) {
 	DWORD size = TAM;
 	//consultar par nome-valor
 	if (RegQueryValueEx(chaveRegistry, par_nome, NULL, NULL, (LPBYTE)value_obtained, &size) == ERROR_SUCCESS)
-	{
 		return _tstoi(value_obtained);
-	}
-	else {
-		TCHAR mesage[TAM];
-		_stprintf_s(mesage, TAM, TEXT("\nFalha a obter do resgistry chave-valor com nome <%s>"), par_nome);
-		closeProgram(mesage);
-	}
-
-	return 0;
+		
+	return -1;
 }
 
 void criarAeroporto() {
@@ -247,14 +238,9 @@ void criarAeroporto() {
 
 void closeProgram(TCHAR mesage[]) {
 	if (chaveRegistry != NULL && RegCloseKey(chaveRegistry) == ERROR_SUCCESS)
-	{
 		_tprintf(TEXT("\nErro crítico! Mensagem de erro:\t%s\nA sair..."), mesage);
-		exit(0);
-	}
 	else
-	{
 		_tprintf(TEXT("\nErro a fechar chave de registo!\n\nA DESLIGAR NA MESMA!"));
-		exit(0);
-	}
-
+			
+	exit(0);
 }
