@@ -1,0 +1,23 @@
+﻿  Main.c
+D:\Desktop\isec\3 ano\2 semestre\SO2\trabalho prático\control\control\Main.c(207,31): warning C4028: formal parameter 1 different from declaration
+D:\Desktop\isec\3 ano\2 semestre\SO2\trabalho prático\control\control\Main.c(209,107): warning C4267: 'function': conversion from 'size_t' to 'DWORD', possible loss of data
+D:\Desktop\isec\3 ano\2 semestre\SO2\trabalho prático\control\control\Main.c(259,29): warning C4474: 'wscanf_s' : too many arguments passed for format string
+D:\Desktop\isec\3 ano\2 semestre\SO2\trabalho prático\control\control\Main.c(259,29): message : placeholders and their parameters expect 1 variadic arguments, but 2 were provided
+D:\Desktop\isec\3 ano\2 semestre\SO2\trabalho prático\control\control\Main.c(262,29): warning C4474: 'wscanf_s' : too many arguments passed for format string
+D:\Desktop\isec\3 ano\2 semestre\SO2\trabalho prático\control\control\Main.c(262,29): message : placeholders and their parameters expect 1 variadic arguments, but 2 were provided
+D:\Desktop\isec\3 ano\2 semestre\SO2\trabalho prático\control\control\Main.c(274,1): warning C4244: 'initializing': conversion from 'double' to 'long', possible loss of data
+D:\Desktop\isec\3 ano\2 semestre\SO2\trabalho prático\control\control\Main.c(387,2): warning C4133: 'function': incompatible types - from 'unsigned short [82]' to 'LPCSTR'
+D:\Desktop\isec\3 ano\2 semestre\SO2\trabalho prático\control\control\Main.c(390,11): warning C4098: 'verificaUnicidade': 'void' function returning a value
+D:\Desktop\isec\3 ano\2 semestre\SO2\trabalho prático\control\control\Main.c(394,11): warning C4098: 'verificaUnicidade': 'void' function returning a value
+D:\Desktop\isec\3 ano\2 semestre\SO2\trabalho prático\control\control\Main.c(401,8): warning C4101: 'chave_nome': unreferenced local variable
+D:\Desktop\isec\3 ano\2 semestre\SO2\trabalho prático\control\control\Main.c(452,12): warning C4098: 'criaConeccaoComAvioes': 'void' function returning a value
+D:\Desktop\isec\3 ano\2 semestre\SO2\trabalho prático\control\control\Main.c(469,12): warning C4098: 'criaConeccaoComAvioes': 'void' function returning a value
+D:\Desktop\isec\3 ano\2 semestre\SO2\trabalho prático\control\control\Main.c(482,12): warning C4098: 'criaConeccaoComAvioes': 'void' function returning a value
+D:\Desktop\isec\3 ano\2 semestre\SO2\trabalho prático\control\control\Main.c(507,12): warning C4098: 'criaConeccaoComAvioes': 'void' function returning a value
+D:\Desktop\isec\3 ano\2 semestre\SO2\trabalho prático\control\control\Main.c(521,12): warning C4098: 'criaConeccaoComAvioes': 'void' function returning a value
+D:\Desktop\isec\3 ano\2 semestre\SO2\trabalho prático\control\control\Main.c(598,25): warning C4553: '==': result of expression not used; did you intend '='?
+D:\Desktop\isec\3 ano\2 semestre\SO2\trabalho prático\control\control\Main.c(644,25): warning C4553: '==': result of expression not used; did you intend '='?
+D:\Desktop\isec\3 ano\2 semestre\SO2\trabalho prático\control\control\Main.c(684,74): warning C4474: 'wprintf' : too many arguments passed for format string
+D:\Desktop\isec\3 ano\2 semestre\SO2\trabalho prático\control\control\Main.c(684,74): message : placeholders and their parameters expect 1 variadic arguments, but 2 were provided
+D:\Desktop\isec\3 ano\2 semestre\SO2\trabalho prático\control\control\Main.c(733): warning C4716: 'trataBufferAvioes': must return a value
+  control.vcxproj -> D:\Desktop\isec\3 ano\2 semestre\SO2\trabalho prático\control\x64\Debug\control.exe
